@@ -6,75 +6,88 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 
 
 function App() {
-  const AIO_KEY = 'aio_lMOG84kSJevpSQujMoLzYCNGeKs5';
+  const AIO_KEY = '...'; //take this in messenger
   const AIO_USERNAME = 'tamquattnb123';
 
   const [DHT20Temp, setDHT20Temp] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const FEED_NAME = 'dht20-temp';
-      const result = await axios(
-        `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
-        {
-          headers: {
-            'X-AIO-Key': AIO_KEY,
-          },
-        }
-      );
-      setDHT20Temp(result.data.value);
-    };
-    fetchData();
+    const intervalId = setInterval(() =>
+    {
+      const fetchData = async () => {
+        const FEED_NAME = 'dht20-temp';
+        const result = await axios(
+          `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
+          {
+            headers: {
+              'X-AIO-Key': AIO_KEY,
+            },
+          }
+        );
+        setDHT20Temp(result.data.value);
+      };
+      fetchData();
+    }, 1000)
+    return () => clearInterval(intervalId);
   }, []);
 
   const [DHT20Humi, setDHT20Humi] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const FEED_NAME = 'dht20-humi';
-      const result = await axios(
-        `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
-        {
-          headers: {
-            'X-AIO-Key': AIO_KEY,
-          },
-        }
-      );
-      setDHT20Humi(result.data.value);
-    };
-    fetchData();
+    const intervalId = setInterval(() => {
+      const fetchData = async () => {
+        const FEED_NAME = 'dht20-humi';
+        const result = await axios(
+          `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
+          {
+            headers: {
+              'X-AIO-Key': AIO_KEY,
+            },
+          }
+        );
+        setDHT20Humi(result.data.value);
+      };
+      fetchData();
+    }, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const [yoloLight, setYoloLight] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const FEED_NAME = 'yolo-light';
-      const result = await axios(
-        `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
-        {
-          headers: {
-            'X-AIO-Key': AIO_KEY,
-          },
-        }
-      );
-      setYoloLight(result.data.value);
-    };
-    fetchData();
+    const intervalId = setInterval(() => {
+      const fetchData = async () => {
+        const FEED_NAME = 'yolo-light';
+        const result = await axios(
+          `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
+          {
+            headers: {
+              'X-AIO-Key': AIO_KEY,
+            },
+          }
+        );
+        setYoloLight(result.data.value);
+      };
+      fetchData();
+    }, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const [soilMoisture, setSoilMoisture] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const FEED_NAME = 'yolo-moisture';
-      const result = await axios(
-        `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
-        {
-          headers: {
-            'X-AIO-Key': AIO_KEY,
-          },
-        }
-      );
-      setSoilMoisture(result.data.value);
-    };
-    fetchData();
+    const intervalId = setInterval(() => {
+      const fetchData = async () => {
+        const FEED_NAME = 'yolo-moisture';
+        const result = await axios(
+          `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data/last`,
+          {
+            headers: {
+              'X-AIO-Key': AIO_KEY,
+            },
+          }
+        );
+        setSoilMoisture(result.data.value);
+      };
+      fetchData();
+    }, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
 
@@ -179,18 +192,20 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const FEED_NAME = 'yolo-temp';
-    axios.get(`https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data?limit=10`)
-      .then(response => {
-        const newData = response.data.map(item => ({
-          name: new Date(item.created_at).toLocaleTimeString(),
-          temperatureOfChip: item.value,
-        }));
-        setData(newData);
-        // console.log(response.data);
-      })
+    const intervalId = setInterval(() => {
+      const FEED_NAME = 'yolo-temp';
+      axios.get(`https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/${FEED_NAME}/data?limit=10`)
+        .then(response => {
+          const newData = response.data.map(item => ({
+            name: new Date(item.created_at).toLocaleTimeString(),
+            temperatureOfChip: item.value,
+          }));
+          setData(newData);
+        })
       .catch(error => console.error(error));
-  }, [data]);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
 
 
