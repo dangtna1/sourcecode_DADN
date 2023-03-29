@@ -3,10 +3,8 @@ import axios from 'axios';
 // import { Line } from 'react-chartjs-2';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-
-
 function App() {
-  const AIO_KEY = '...'; //take this in messenger
+  const AIO_KEY = 'aio_lMOG84kSJevpSQujMoLzYCNGeKs5';
   const AIO_USERNAME = 'tamquattnb123';
 
   const [DHT20Temp, setDHT20Temp] = useState(null);
